@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from math import pi, atan2, sqrt
 from scipy.linalg import eig
 #COM9 is nrf5340 receiver
-ser = serial.Serial('COM9', 115200)
+ser = serial.Serial('COM4', 115200)
 
 import cmath
 
@@ -139,11 +139,11 @@ while True:
             ax2 = plt.subplot(122)
             ax2.clear()
             ax2.plot(I_need, Q_need)
-            experiment_name = 'nothing'
+            experiment_name = 'walking_3'
             if data_index <= 10:
-                plt.savefig('Cheng_data/figure/{}_result_{}.png'.format(experiment_name, data_index))
-                np.savez('Cheng_data/data/{}_Idata_{}.npz'.format(experiment_name, data_index), I_need)
-                np.savez('Cheng_data/data/{}_Qdata_{}.npz'.format(experiment_name, data_index), Q_need)
+                plt.savefig('CHW_AoD/Cheng_data/figure/{}_result_{}.png'.format(experiment_name, data_index))
+                np.savez('CHW_AoD/Cheng_data/data/{}_Idata_{}.npz'.format(experiment_name, data_index), I_need)
+                np.savez('CHW_AoD/Cheng_data/data/{}_Qdata_{}.npz'.format(experiment_name, data_index), Q_need)
             #plt.show()
             data_index += 1
             
