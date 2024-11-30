@@ -8,8 +8,8 @@ import binascii
 import matplotlib.pyplot as plt
 from math import pi, atan2, sqrt
 from scipy.linalg import eig
-
-ser = serial.Serial('COM9', 115200)
+#COM9 is nrf5340 receiver
+ser = serial.Serial('COM11', 115200)
 
 import cmath
 
@@ -110,7 +110,6 @@ while True:
             ref_theta_array = np.zeros(4)
             for i in range(4):
                 ref_theta_array[i] = calculate_angle(reference_I[i], reference_Q[i], reference_I[i+4], reference_Q[i+4])
-            
             # in every us, the IQ vector will rotate pi/2 + a small error angle
             angle_change_1us = np.mean(ref_theta_array)/4
             print('angle_change_1us:',angle_change_1us)
@@ -145,7 +144,6 @@ while True:
             ant1_I_mean, ant1_Q_mean = normalization(ant1_I_mean, ant1_Q_mean)
             ant2_I_mean, ant2_Q_mean = normalization(ant2_I_mean, ant2_Q_mean)
             ant3_I_mean, ant3_Q_mean = normalization(ant1_I_mean, ant3_Q_mean)
-        
             #for i in range(len(ant0_I)):
 
             def steering_vector(alpha):
@@ -164,7 +162,6 @@ while True:
                 ant0_theta = 0
 
                 received_signal = np.array([cmath.exp(1j*ant0_theta), cmath.exp(1j*ant1_theta), cmath.exp(1j*ant2_theta)])
-               
                 angle_list = [np.radians(i) for i in range(-90, 90)]
                 y_alpha_list = []
                 for alpha in angle_list:
