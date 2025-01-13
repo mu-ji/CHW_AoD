@@ -8,7 +8,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-ser = serial.Serial('COM9', 115200)
+ser = serial.Serial('COM4', 115200)
 rawFrame = []
 
 node1_data = {'antenna_array_1':[], 'antenna_array_2':[], 'antenna_array_3':[], 'antenna_array_4':[]}
