@@ -21,6 +21,17 @@ def generate_position(distance, node_data):
     total_estimate_x = distance*math.tan((array_1_mean*array_1_weight + array_3_mean*array_3_weight)*np.pi/180)
     total_estimate_y = distance*math.tan((array_2_mean*array_2_weight + array_4_mean*array_4_weight)*np.pi/180)
 
+    theta2 = (array_2_mean*array_2_weight + array_4_mean*array_4_weight)*np.pi/180
+    theta1 = (array_1_mean*array_1_weight + array_3_mean*array_3_weight)*np.pi/180
+
+    if theta2 > 0:
+        true_extimate_y = (((math.tan(theta1)**2+1)*(math.tan(theta2)**2)*(distance**2))/(1-((math.tan(theta1)**2)*(math.tan(theta2)**2))))**0.5
+    else:
+        true_extimate_y = -((((math.tan(theta1)**2+1)*(math.tan(theta2)**2)*(distance**2))/(1-((math.tan(theta1)**2)*(math.tan(theta2)**2))))**0.5)
+
+
+    true_extimate_x = math.tan(theta1)*((true_extimate_y**2 + distance**2)**0.5)
+
     x_list = []
     y_list = []
     sample_num = len(node_data['antenna_array_1'])
@@ -28,7 +39,7 @@ def generate_position(distance, node_data):
         x_list.append(distance*math.tan((node_data['antenna_array_1'][i]*array_1_weight + node_data['antenna_array_3'][i]*array_3_weight)*np.pi/180))
         y_list.append(distance*math.tan((node_data['antenna_array_2'][i]*array_2_weight + node_data['antenna_array_4'][i]*array_4_weight)*np.pi/180))
     
-    return x_list, y_list, total_estimate_x, total_estimate_y
+    return x_list, y_list, total_estimate_x, total_estimate_y, true_extimate_x, true_extimate_y
 def one_node_visualization(distance, node1_xangle, node1_yangle):
     node1_data = pd.read_csv('AoD_experiment_data/one_node_experiment/node1_data_{}_{}.csv'.format(node1_xangle, node1_yangle))
 
@@ -56,7 +67,7 @@ def one_node_visualization(distance, node1_xangle, node1_yangle):
         #    array_4_angle[i] = array_2_angle[i]
         array_4_est_y.append(distance*math.tan(array_4_angle[i]*np.pi/180))
 
-    node_1_x, node_1_y, node_1_estimate_x, node_1_estimate_y = generate_position(distance, node1_data)
+    node_1_x, node_1_y, node_1_estimate_x, node_1_estimate_y, true_estimate_x, true_estimate_y = generate_position(distance, node1_data)
 
     #plt.scatter(array_1_est_x, array_2_est_y, color = 'r', label='est according 1 and 2')
     #plt.scatter(array_1_est_x, array_4_est_y, color = 'b', label='est according 1 and 4')
@@ -70,7 +81,8 @@ def one_node_visualization(distance, node1_xangle, node1_yangle):
     node_1_true_x = distance*math.tan(node1_xangle)
     node_1_true_y = distance*math.tan(node1_yangle)
     plt.scatter(node_1_true_x, node_1_true_y, color = 'b', label='true position')
-
+    plt.scatter(true_estimate_x, true_estimate_y, color = 'r', label='true estimate position')
+    plt.plot([true_estimate_x, node_1_true_x], [true_estimate_y, node_1_true_y], color='r', linestyle='--')
     plt.plot([node_1_estimate_x, node_1_true_x], [node_1_estimate_y, node_1_true_y], color='r', linestyle='--')
 
     #plt.xlim(-2*distance, 2*distance)

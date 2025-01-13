@@ -74,3 +74,83 @@ print('aoa_anchor_mean_consumption:', aoa_anchor_mean_consumption)
 print('aod_node_mean_consumption:', aod_node_mean_consumption)
 print('aod_anchor_consumption:', aod_anchor_consumption)
 print('aod_node_without_network_consumption:', aod_node_without_network_consumption)
+
+
+fig, axs = plt.subplots(2, 2, figsize=(15, 15))
+
+axs[0, 0].plot(aoa_anchor_data['Timestamp(ms)'][:100000], aoa_anchor_data['Current(uA)'][:100000]/1000, label='AoA anchor current electricity')
+axs[0, 0].set_title('AoA anchor energy consumption', fontsize=15)
+axs[0, 0].grid(True)
+axs[0, 0].legend(loc='upper right', fontsize=15)
+axs[0, 0].set_xlabel('Time (ms)', fontsize=20)
+axs[0, 0].set_ylabel('Current electricity (mA)', fontsize=20)
+
+axs[0, 1].plot(aod_anchor_data['Timestamp(ms)'][:100000], aod_anchor_data['Current(uA)'][:100000]/1000, label='AoD anchor current electricity(uA)')
+axs[0, 1].set_title('AoD anchor energy consumption', fontsize=15)
+axs[0, 1].grid(True)
+axs[0, 1].legend(loc='upper right', fontsize=15)
+axs[0, 1].set_xlabel('Time (ms)', fontsize=20)
+axs[0, 1].set_ylabel('Current electricity (mA)', fontsize=20)
+
+axs[1, 0].plot(aod_node_without_network_data['Timestamp(ms)'][:100000], aod_node_without_network_data['Current(uA)'][:100000]/1000, label='AoD node without network current electricity(uA)')
+axs[1, 0].set_title('AoD node without network energy consumption', fontsize=15)
+axs[1, 0].grid(True)
+axs[1, 0].legend(loc='upper right', fontsize=15)
+axs[1, 0].set_xlabel('Time (ms)', fontsize=20)
+axs[1, 0].set_ylabel('Current electricity (mA)', fontsize=20)
+
+axs[1, 1].plot(aod_node_data['Timestamp(ms)'][:100000], aod_node_data['Current(uA)'][:100000]/1000, label='AoD node current electricity(uA)')
+axs[1, 1].set_title('AoD node with network energy consumption', fontsize=15)
+axs[1, 1].grid(True)
+axs[1, 1].legend(loc='upper right', fontsize=15)
+axs[1, 1].set_xlabel('Time (ms)', fontsize=20)
+axs[1, 1].set_ylabel('Current electricity (mA)', fontsize=20)
+
+plt.tight_layout()
+plt.savefig('figures/energy_consumption.svg', format='svg')
+
+plt.show()
+
+
+fig, axs = plt.subplots(1, 2, figsize=(10, 5))
+
+axs[0].plot(aoa_anchor_data['Timestamp(ms)'][:100000], aoa_anchor_data['Current(uA)'][:100000]/1000, label='AoA anchor current electricity')
+axs[0].set_title('AoA anchor energy consumption', fontdict={'weight': 'normal', 'size': 12})
+axs[0].grid(True)
+axs[0].legend(loc='upper right', fontsize=10)
+axs[0].set_xlabel('Time (ms)', fontdict={'weight': 'normal', 'size': 12} )
+axs[0].set_ylabel('Current electricity (mA)', fontdict={'weight': 'normal', 'size': 12})
+
+axs[1].plot(aod_anchor_data['Timestamp(ms)'][:100000], aod_anchor_data['Current(uA)'][:100000]/1000, label='AoD anchor current electricity(uA)')
+axs[1].set_title('AoD anchor energy consumption', fontdict={'weight': 'normal', 'size': 12})
+axs[1].grid(True)
+axs[1].legend(loc='upper right', fontsize=10)
+axs[1].set_xlabel('Time (ms)', fontdict={'weight': 'normal', 'size': 12})
+axs[1].set_ylabel('Current electricity (mA)', fontdict={'weight': 'normal', 'size': 12})
+
+plt.tight_layout()
+plt.savefig('figures/anchor_consumption.svg', format='svg')
+
+plt.show()
+
+
+fig, axs = plt.subplots(1, 2, figsize=(10, 5))
+
+axs[0].plot(aod_node_without_network_data['Timestamp(ms)'][:100000], aod_node_without_network_data['Current(uA)'][:100000]/1000, label='AoD node without network current electricity(uA)')
+axs[0].set_title('AoD node without network energy consumption', fontdict={'weight': 'normal', 'size': 12})
+axs[0].grid(True)
+axs[0].legend(loc='upper right', fontsize=10)
+axs[0].set_xlabel('Time (ms)', fontdict={'weight': 'normal', 'size': 12})
+axs[0].set_ylabel('Current electricity (mA)', fontdict={'weight': 'normal', 'size': 12})
+
+axs[1].plot(aod_node_data['Timestamp(ms)'][:100000], aod_node_data['Current(uA)'][:100000]/1000, label='AoD node current electricity(uA)')
+axs[1].set_title('AoD node with network energy consumption', fontdict={'weight': 'normal', 'size': 12})
+axs[1].grid(True)
+axs[1].legend(loc='upper right', fontsize=10)
+axs[1].set_xlabel('Time (ms)', fontdict={'weight': 'normal', 'size': 12})
+axs[1].set_ylabel('Current electricity (mA)', fontdict={'weight': 'normal', 'size': 12})
+
+plt.tight_layout()
+plt.savefig('figures/node_consumption.svg', format='svg')
+
+plt.show()
